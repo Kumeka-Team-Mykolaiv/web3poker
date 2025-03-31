@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Table</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #2b2b2b;
+            color: white;
+        }
+        canvas {
+            background-color: green;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Poker Game</h1>
+<canvas id="pokerTable" width="600" height="400"></canvas>
+<script>
+    const canvas = document.getElementById("pokerTable");
+    const ctx = canvas.getContext("2d");
+
+    const gameData = {
+        mainPlayer: "Vitaliy",
+        otherPlayers: ["Susi", "Johny", "Albert"],
+        communityCards: ["K♥", "9♠", "K♣", "2♣"],
+        playerCards: ["K♦", "K♠"]
+    };
+
+    function drawTable() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#0a8a0a";
+        ctx.fillRect(50, 50, 500, 300);
+
+        drawPlayers();
+        drawCommunityCards();
+    }
+
+    function drawPlayers() {
+        const positions = [
+            { x: 250, y: 20 },
+            { x: 50, y: 150 },
+            { x: 450, y: 150 },
+            { x: 250, y: 320 }
+        ];
+
+        const allPlayers = [gameData.otherPlayers[0], gameData.otherPlayers[1], gameData.otherPlayers[2], gameData.mainPlayer];
+
+        allPlayers.forEach((player, index) => {
+            ctx.fillStyle = "white";
+            ctx.fillText(player, positions[index].x, positions[index].y - 10);
+            drawCards(positions[index].x, positions[index].y, index === 3);
+        });
+    }
+
+    function drawCards(x, y, isMainPlayer) {
+        const cardWidth = 30;
+        const cardHeight = 50;
+        const cardSpacing = 10;
+
+        for (let i = 0; i < 2; i++) {
+            ctx.fillStyle = "white";
+            ctx.fillRect(x + i * (cardWidth + cardSpacing), y, cardWidth, cardHeight);
+
+            if (isMainPlayer) {
+                ctx.fillStyle = "black";
+                ctx.fillText(gameData.playerCards[i], x + i * (cardWidth + cardSpacing) + 5, y + 30);
+            }
+        }
+    }
+
+    function drawCommunityCards() {
+        const startX = 180;
+        const startY = 200;
+        const cardWidth = 40;
+        const cardHeight = 60;
+        const cardSpacing = 10;
+
+        for (let i = 0; i < gameData.communityCards.length; i++) {
+            ctx.fillStyle = "white";
+            ctx.fillRect(startX + i * (cardWidth + cardSpacing), startY, cardWidth, cardHeight);
+            ctx.fillStyle = "black";
+            ctx.fillText(gameData.communityCards[i], startX + i * (cardWidth + cardSpacing) + 5, startY + 35);
+        }
+    }
+
+    drawTable();
+</script>
+</body>
+</html>
