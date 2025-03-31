@@ -78,14 +78,24 @@
         const cardSpacing = 10;
 
         for (let i = 0; i < 2; i++) {
-            ctx.fillStyle = "white";
-            ctx.strokeStyle = "black";
-            ctx.lineWidth = 2;
-            drawRoundedRect(x + i * (cardWidth + cardSpacing), y, cardWidth, cardHeight, 8);
-
             if (isMainPlayer) {
+                ctx.fillStyle = "white";
+                ctx.strokeStyle = "black";
+                ctx.lineWidth = 2;
+                drawRoundedRect(x + i * (cardWidth + cardSpacing), y, cardWidth, cardHeight, 8);
                 ctx.fillStyle = "black";
                 ctx.fillText(gameData.playerCards[i], x + i * (cardWidth + cardSpacing) + 5, y + 30);
+            } else {
+                ctx.fillStyle = "blue";
+                ctx.strokeStyle = "black";
+                ctx.lineWidth = 2;
+                drawRoundedRect(x + i * (cardWidth + cardSpacing), y, cardWidth, cardHeight, 8);
+                ctx.fillStyle = "white";
+                for (let j = 0; j < 4; j++) {
+                    ctx.beginPath();
+                    ctx.arc(x + i * (cardWidth + cardSpacing) + 10 + (j % 2) * 10, y + 15 + Math.floor(j / 2) * 15, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
         }
     }
