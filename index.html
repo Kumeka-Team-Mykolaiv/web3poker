@@ -56,6 +56,22 @@
         });
     }
 
+    function drawRoundedRect(x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+    }
+
     function drawCards(x, y, isMainPlayer) {
         const cardWidth = 30;
         const cardHeight = 50;
@@ -63,7 +79,9 @@
 
         for (let i = 0; i < 2; i++) {
             ctx.fillStyle = "white";
-            ctx.fillRect(x + i * (cardWidth + cardSpacing), y, cardWidth, cardHeight);
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            drawRoundedRect(x + i * (cardWidth + cardSpacing), y, cardWidth, cardHeight, 8);
 
             if (isMainPlayer) {
                 ctx.fillStyle = "black";
@@ -81,7 +99,9 @@
 
         for (let i = 0; i < gameData.communityCards.length; i++) {
             ctx.fillStyle = "white";
-            ctx.fillRect(startX + i * (cardWidth + cardSpacing), startY, cardWidth, cardHeight);
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            drawRoundedRect(startX + i * (cardWidth + cardSpacing), startY, cardWidth, cardHeight, 10);
             ctx.fillStyle = "black";
             ctx.fillText(gameData.communityCards[i], startX + i * (cardWidth + cardSpacing) + 5, startY + 35);
         }
